@@ -1,0 +1,85 @@
+fieldset {
+  width: 100%;
+   border:2px solid black;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
+
+fieldset input {
+  width: 45%;
+}
+button {
+  color: #900;
+  font-weight: bold;
+  margin-left: 35px;
+  margin-top: 5px;
+  vertical-align: middle;
+}  
+
+.form-control:valid {
+  background-color : white;
+}
+.form-control:invalid {
+  background-color: yellow;
+}
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+footer {
+  clear:both;
+  position: fixed;
+  bottom: 0;
+  height: 20px;
+  width: 100%;
+  color: #fff;
+  background-color: #000;
+  font-size:  x-small;
+  font-style: italic;
+  font-family: Papyrus , Copperplate ;
+}
+h2 {
+  text-decoration: underline;
+}
+.center {
+  display: block;
+  float: center;
+  margin-left: 50%;
+  margin-right: 50%;
+  width: 10%;
+  height:5%;
+}
+
+
+#add_numbers {
+  position: absolute;
+  float:left;
+  width:30%;
+  left :1%;
+  height: 280px; 
+  text-align: center;
+  
+} 
+#get_numbers{ 
+  position: absolute;
+  display: block;
+  float:left; 
+  left : 33%; 
+  width:30%; 
+  height:280px; 
+  text-align: center;
+  
+} 
+#delete_numbers{ 
+  align-items: left;
+  position: absolute;
+  left : 66%;
+  width:30%; 
+  height:280px;
+  text-align: center; 
+
+} 

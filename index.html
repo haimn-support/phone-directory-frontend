@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!-- Bootstrap CSS -->
+<html>
+ <head>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <title>SIP-LNP-WebGUI</title> 
+  <script type="text/javascript" src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+
+      <!-- This is a JS function for the  Add/ UPDATE number part of the form-->
+    <script type="text/javascript">
+        $(function() {
+        // This function will enable the button only if both fields are valid
+        $('#dialed_number').change(function(){
+        if ((document.getElementById('dialed_number').validity.valid) && (document.getElementById('translated_number').validity.valid)){
+            document.getElementById('add_num').disabled = false;
+            $('#add_result').removeClass("d-none").hide(); 
+        }
+        else {
+            document.getElementById('add_num').disabled = true;
+            $('#add_result').removeClass("d-none").hide(); 
+        }
+    });
+    $('#translated_number').change(function(){
+        if ((document.getElementById('dialed_number').validity.valid) && (document.getElementById('translated_number').validity.valid)){
+            document.getElementById('add_num').disabled = false;
+            $('#add_result').removeClass("d-none").hide();
+        }
+        else {
+            document.getElementById('add_num').disabled = true;
+            $('#add_result').removeClass("d-none").hide();
+        }
+    });    
+        
+        // This function will send the Add/Update request to the LNP DB 
+        $("#add_num").click(function(elem) {
+            elem.preventDefault();
+            var html = '';
+            var url = 'http://'+ window.location.host.split(':')[0] +':30000/lnp/';
+            var origNumber = document.getElementById("dialed_number").value;
+            var transNumber = document.getElementById("translated_number").value;
+    $.post(url, { number : origNumber , transnum :transNumber}, function( data ) {
+
+        if (data.error){
+            document.getElementById("add_result").innerHTML = data.error;
+            $('#add_result').removeClass("d-none");
+            $('#add_result').show();  
+        }
+        else {
+            document.getElementById("add_result").innerHTML = data.success;
+            $('#add_result').removeClass("d-none");
+            $('#add_result').show();    
+        }
+        console.log( data.success ); 
+      }, "json");
+        }); 
+    });
+    </script>
+
+    <!-- This is a JS function for the  Check number part of the form-->
+  <script type="text/javascript">
+    $(function() {
+        // This function will enable the button only if the field is valid
+    $('#checked_number').change(function(){
+        if (document.getElementById('checked_number').validity.valid){
+            document.getElementById('check_num').disabled = false;
+            $('#get_result').removeClass("d-none").hide(); 
+        }
+        else {
+            document.getElementById('check_num').disabled = true;
+            console.log('Invalid number')
+            $('#get_result').removeClass("d-none").hide(); 
+        }
+
+    });
+        //Function will send GET to API and display the answer
+        $("#check_num").click(function(e) {
+        e.preventDefault();
+        var html = '';
+        var url = 'http://'+ window.location.host.split(':')[0] +':30000/lnp';
+        var number = document.getElementById("checked_number").value;
+        console.log(number);
+        if (number == '') {
+            alert('Please enter number to check and try again');
+        }
+        else {
+        $.get( url +'/'+ number, function( data ) {
+            if (data.error){
+                console.log(data.error);
+                document.getElementById("get_result").innerHTML = data.error;
+                $('#get_result').removeClass("d-none").show();  
+                //alert( "Data Loaded: " +  data.error );
+            }
+            else {
+                document.getElementById("get_result").innerHTML = "The Translated number is : " + data.number;
+                $('#get_result').removeClass("d-none").show();      
+                //alert('the number is : ' + data.number);
+            }
+          });
+        }
+    })
+
+    });
+    </script>
+
+ <!-- This is a JS function for the DELETE number part of the form-->
+ <script type="text/javascript">
+    $(function() {
+        // This function will enable the button only if the field is valid
+    $('#deleted_number').change(function(){
+        if (document.getElementById('deleted_number').validity.valid){
+            document.getElementById('delete_num').disabled = false;
+            $('#del_result').removeClass("d-none").hide();
+        }
+        else {
+            document.getElementById('delete_num').disabled = true;
+            $('#del_result').removeClass("d-none").hide();
+        }
+
+    });
+        //Function will send DELETE to API and display the answer
+        $("#delete_num").click(function(e) {
+        e.preventDefault();
+        var html = '';
+        var url = 'http://'+ window.location.host.split(':')[0] +':30000/lnp';
+        var number = document.getElementById("deleted_number").value;
+        console.log(number);
+        if (number == '') {
+            alert('Please enter number to check and try again');
+        }
+        else {
+            $.ajax({
+                url: url +'/'+ number,
+                type: 'DELETE',
+                success: function(data) {
+                    if (data.error){
+                        console.log('error matched');
+                        document.getElementById("del_result").innerHTML = data.error;
+                        $('#del_result').removeClass("d-none").show(); 
+                        //alert( "Data Loaded: " +  data.error );
+                    }
+                    else {
+                        document.getElementById("del_result").innerHTML =  data.success;
+                        $('#del_result').removeClass("d-none").show();    
+                        //alert('the number is : ' + data.number);
+                    }
+                }
+            });
+        }
+    })
+
+    });
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  </head>
+<body>
+    <div id="heading">
+     <img src="images/QwiltLogo.png" alt="Enghouse" class ="center">
+     </div>
+    <br><br><br><br>
+    <div id="add_numbers" class="row">
+    <fieldset> 
+        <h3 style="font-weight:bold;">Add number to LNP DB</h3>
+        <br>
+        <!-- The Customer Name field -->
+        <label for="dialed_number">Original Dialed Number</label>
+        <input type="text" pattern="^[0-9]*$" class="form-control" title="Enter Dialed Number" name="dialed_number" id="dialed_number" placeholder="Original Dialed Number" size="5" value="" required />         
+        <br>
+        <label for="translated_number">Translated Number</label>
+        <input type="text" pattern="^[0-9]*$" class="form-control" title="Enter Translated Number" name="translated_number" id="translated_number" placeholder="Translated Number" size="5" value="" required />  
+        <br>
+        <h5 id="add_result" class="d-none">test</h5> 
+        <button type=button id="add_num" disabled >+ Add Number +</button>
+        </fieldset>
+    </div>
+    <div id= "get_numbers">
+        <fieldset>
+            <h3 style="font-weight:bold;">Check Number in LNP DB</h3>
+            <br>
+            <label for="checked_number">Original Dialed Number</label>
+            <input type="text" pattern="^[0-9]*$" class="form-control" title="Enter Original Dialed Number To Check" name="checked_number" id="checked_number" placeholder="Original Dialed Number To Check" size="5" value="" required />  
+        <br>
+        <h5 id="get_result" class="d-none"></h5> 
+        <button type=button id="check_num" disabled>+ Check Number +</button>
+        </fieldset>
+    </div>
+    <div id="delete_numbers">
+        <fieldset>
+            <h3 style="font-weight:bold;">Delete Number in LNP DB</h3>
+            <br>
+            <label for="dialed_number">Original Dialed Number</label>
+            <input type="text" pattern="^[0-9]*$" class="form-control" title="Enter Original Dialed Number To Delete" name="deleted_number" id="deleted_number" placeholder="Original Dialed Number To Delete" size="5" value="" required />  
+            <br>
+            <h5 id="del_result" class="d-none"></h5> 
+        <button type=button id="delete_num" disabled>+ Delete Number +</button>
+        </fieldset>
+    </div>
+
+</body>
+<footer>Created by Haim Natan for QWILT SP Support Team - 2021</footer>
+</html>
