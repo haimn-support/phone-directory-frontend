@@ -39,7 +39,7 @@
         $("#add_num").click(function(elem) {
             elem.preventDefault();
             var html = '';
-            var url = 'http://'+ window.location.host.split(':')[0] +':30000/lnp/';
+            var url = 'http://'+ window.location.host.split(':')[0] +'/lnp/';
             var origNumber = document.getElementById("dialed_number").value;
             var transNumber = document.getElementById("translated_number").value;
     $.post(url, { number : origNumber , transnum :transNumber}, function( data ) {
@@ -80,7 +80,7 @@
         $("#check_num").click(function(e) {
         e.preventDefault();
         var html = '';
-        var url = 'http://'+ window.location.host.split(':')[0] +':30000/lnp';
+        var url = 'http://'+ window.location.host.split(':')[0] +'/lnp';
         var number = document.getElementById("checked_number").value;
         console.log(number);
         if (number == '') {
@@ -125,7 +125,7 @@
         $("#delete_num").click(function(e) {
         e.preventDefault();
         var html = '';
-        var url = 'http://'+ window.location.host.split(':')[0] +':30000/lnp';
+        var url = 'http://'+ window.location.host.split(':')[0] +'/lnp';
         var number = document.getElementById("deleted_number").value;
         console.log(number);
         if (number == '') {
