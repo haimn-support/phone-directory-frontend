@@ -46,9 +46,41 @@
                 //alert( "Data Loaded: " +  data.error );
             }
             else {
-                document.getElementById("get_result").innerHTML = "The number is : " + data.phone + ", The PushOver email is : " + data.pushover;
-                $('#get_result').removeClass("d-none").show();      
+                var frog = window.open("","Results for :" + email ,"scrollbars=1,resizable=1,location=0"); 
+                var html = "<html><head><title>Results for "+ email +"</title></head><body><h1>Serach results for "+ email + " :</h1>" ;
+                html += "<h4>The number is : </h4>" + data.phone + "<h4>The PushOver email is : </h4>" + data.pushover;
+                html += "<h4>The Primary resposiblities are : </h4>";
+                for (var i=0 ; i< data.primaryResponsiblity.length ; i++) {
+                    if (i == 0 ) { 
+                        html += data.primaryResponsiblity[i]
+                    }
+                    else  {
+                    html +="<br>" + data.primaryResponsiblity[i]
+                    }
+                }
+                html+= "<br><h4>The Backup resposiblities are :</h4>";
+                for (var i=0 ; i< data.backupResponsiblity.length ; i++) {
+                    if (i == 0 ) { 
+                        html += data.backupResponsiblity[i]
+                    }
+                    else {
+                        html +="<br>" + data.backupResponsiblity[i]
+                    }
+                }
+                html += "</body></html>";
+                frog.document.open();
+                frog.document.write(html);
+                frog.document.close();
                 //alert('the number is : ' + data.number);
+            }
+          }).fail(function(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 404 ){
+                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                console.log(responseText.error);
+                console.log(errorThrown);
+                document.getElementById("get_result").innerHTML = responseText.error;
+                $('#get_result').removeClass("d-none").show();  
+                //alert( "Data Loaded: " +  data.error );
             }
           });
         }
@@ -63,7 +95,7 @@
   </head>
 <body>
     <div id="heading">
-     <img src="images/QwiltLogo.png" alt="Enghouse" class ="center">
+     <img src="images/QwiltLogo.png" alt="Qwilt" class ="center">
      </div>
     <br><br><br><br>
     <div id= "get_number">
