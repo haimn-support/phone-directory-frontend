@@ -46,7 +46,7 @@
                 //alert( "Data Loaded: " +  data.error );
             }
             else {
-                var frog = window.open("","Results for :" + email ,"scrollbars=1,resizable=1,location=0,width=700,height=700"); 
+                var frog = window.open("","Results for :" + email ,"location=0,scrollbars=1,resizable=1,location=0,width=700,height=700"); 
                 var html = "<html><head><title>Results for "+ email +"</title></head><body><h1>Serach results for "+ email + " :</h1>" ;
                 html += "<h4>The number is : </h4>" + data.phone + "<h4>The PushOver email is : </h4>" + data.pushover;
                 html += "<h4>The Primary resposiblities are : </h4>";
