@@ -46,6 +46,7 @@ h2 {
   text-decoration: underline;
 }
 .center {
+
   display: block;
   float: center;
   margin-left: 50%;
@@ -56,6 +57,8 @@ h2 {
 
 
 #add_numbers {
+  padding-top: 50px;
+  padding-left :30px;
   position: absolute;
   float:left;
   width:30%;
@@ -65,6 +68,8 @@ h2 {
   
 } 
 #get_numbers{ 
+  padding-top: 50px;
+  padding-left :30px;
   position: absolute;
   display: block;
   float:left; 
